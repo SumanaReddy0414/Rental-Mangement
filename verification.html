@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css\forgotpassword.css">
+    <title>Email verification</title>
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-firestore.js"></script>
+   </head>
+<body>
+
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-auth.js"></script>
+  <script>
+
+var firebaseConfig = {
+  apiKey: "AIzaSyCyVppKuVBIHgpTCEJsC6fql2j24Q9ykVc",
+  authDomain: "rental-management-e12bf.firebaseapp.com",
+  projectId: "rental-management-e12bf",
+  storageBucket: "rental-management-e12bf.appspot.com",
+  messagingSenderId: "772716264622",
+  appId: "1:772716264622:web:192dc75f005fcf956c013f",
+  measurementId: "G-11WGRKX5VQ"
+};
+          
+          firebase.initializeApp(firebaseConfig);
+          firebase.analytics();
+          var db=firebase.firestore();
+          console.log(db);
+          
+    </script>
+    <div class="box">
+    <h3>verify Email</h3>
+    <p class="note">
+        Verification email has been sent your registered email address. Please verify the mail and click on home button below
+
+    </p>
+    
+    <input class ="btn" style="margin-top: 17px;" type="button" value="Resend" id="reg" onclick="javascript: reSendMail();">
+    <input class ="btn" style="margin-top: 17px;" type="button" value="Home" id="reg" onclick="javascript: home();">
+       
+    </div>
+    
+ <script>    
+       
+    function reSendMail(){
+                            var user = firebase.auth().currentUser;
+                    user.sendEmailVerification().then(function() {
+                    // Email sent.
+                    alert("Email has been sent your registered email address, please verify your account!!")
+                    }).catch(function(error) {
+                    // An error happened.
+                    alert(error)
+                    });
+                           }
+        function home(){
+          window.location.href="home.html";
+        }
+ </script>
+</body>
+</html>

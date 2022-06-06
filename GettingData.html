@@ -1,0 +1,74 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-auth.js"></script>
+    <script>
+            var firebaseConfig = {
+                apiKey: "AIzaSyCyVppKuVBIHgpTCEJsC6fql2j24Q9ykVc",
+                authDomain: "rental-management-e12bf.firebaseapp.com",
+                projectId: "rental-management-e12bf",
+                storageBucket: "rental-management-e12bf.appspot.com",
+                messagingSenderId: "772716264622",
+                appId: "1:772716264622:web:192dc75f005fcf956c013f",
+                measurementId: "G-11WGRKX5VQ"
+                };
+                            
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+            var db=firebase.firestore();
+            console.log(db);
+           
+            
+            db.collection("users")
+              .onSnapshot(function(querySnapshot) {
+                  querySnapshot.forEach(function(doc) {
+                       console.log(doc.id, " => ", doc.data());
+                      list.innerHTML+="<div class='list_item'><h3> Name:- "+doc.data().name+"</h3><h3> Email:-"+doc.data().email +"</h3></div>";
+                      
+
+                    });
+              });
+
+              firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                // User is signed in
+                var docRef = db.collection("users").doc(user.email);
+           
+                const list=document.querySelector("#list");
+            docRef.get().then(function(doc){
+                s=doc.data().name.indexOf(" ");
+              
+            });
+            
+            console.log("name ="+sessionStorage.getItem("username"));
+  
+
+               
+                
+               
+                } else {
+                // No user is signed in.
+                console.log("No Logged in User ");
+
+                }
+                });
+                
+               
+           
+     </script>
+      
+    <div id="list">
+        <div class="list_item">
+
+        </div>
+    </div>
+    
+</body>
+</html>

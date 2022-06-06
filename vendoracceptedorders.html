@@ -1,0 +1,171 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <link rel="stylesheet" href="css\carousel.css">
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
+    
+
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-firestore.js"></script>
+    <link rel="stylesheet" href="css\home.css">
+    <link href="css/nav.css" rel="stylesheet">
+    <link rel="stylesheet" href="css\searchresults.css">
+    <link rel="stylesheet" href="css\popup.css">
+    <link rel="stylesheet" href="css\resultdisplay.css">
+    <link rel= "stylesheet" href="css\footer.css">
+    <title>Elite Rentals</title>
+    
+</head>
+<body>
+ 
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-auth.js"></script>
+  <script>
+
+      var firebaseConfig = {
+        apiKey: "AIzaSyCyVppKuVBIHgpTCEJsC6fql2j24Q9ykVc",
+        authDomain: "rental-management-e12bf.firebaseapp.com",
+        projectId: "rental-management-e12bf",
+        storageBucket: "rental-management-e12bf.appspot.com",
+        messagingSenderId: "772716264622",
+        appId: "1:772716264622:web:192dc75f005fcf956c013f",
+        measurementId: "G-11WGRKX5VQ"
+      };
+          
+          firebase.initializeApp(firebaseConfig);
+          firebase.analytics();
+          var db=firebase.firestore();
+          console.log(db);
+         
+          
+        
+            firebase.auth().onAuthStateChanged(function(user) {
+              if (user) {    
+                var us = firebase.auth().currentUser;         
+                if(!us.emailVerified){
+                  window.location.href="verification.html";
+                }
+              console.log("Logged in User home "+sessionStorage.getItem("username"));
+              } else {
+              console.log("No Logged in User ");
+              window.location.href="login.html";              }
+              });
+              
+            function logout(){
+            firebase.auth().signOut().then(function(){
+              sessionStorage.clear();
+            alert("Logged out successfully!!");
+            });
+            }
+        
+         
+   </script>
+    
+  <header>
+  
+    <div class="menu-bar">
+        
+                     
+          <ul>
+            <li style="margin-left:-14em; padding-right: 70px;"> <a href="#"><b><span>ELITE</span>RENTALS</B></a></li>
+                <li><b><a  href="vendorhome.html" >Requested Orders</a></b></li> 
+                <li><b><a style="color:rgb(55, 218, 55);" href="vendoracceptedorders.html">Accepted Orders</a></b></li>
+                <li><b><a  href="vendorcompletedorders.html">Completed Orders</a></b></li>                  
+            <li><b><a href="#footer">CONTACT US</a></b> </li>
+            <li><b><a  href="javascript:logout();">LOGOUT</a></b></li>
+                <div class="user" id="uname">
+                  User name
+                </div>
+                <div class="uimg"><i class="fas fa-user"></i>
+                </div>    
+            </ul>        
+          </div>
+      </header>
+      <script>
+        document.getElementById("uname").firstChild.nodeValue=sessionStorage.getItem("username");  
+     </script>
+     <h2>Orders</h2>
+     <br>
+     <div class="orders">
+     <ol  class="list" id="list" type="1">
+        
+        <div id="content"></div>
+
+        </div>
+      </ol>
+    </div>
+    <script>
+            const list=document.querySelector("#list");
+                db.collection("Orders")
+                .where("Status","==","Accepted")             
+                .onSnapshot(function(querysnapshot){
+                    querysnapshot.forEach(function(doc){
+                            console.log(doc.id);
+                            var email=doc.data().Customer_Email;
+                            var owner=doc.data().Customer_Name;
+                            var phno=doc.data().Customer_Mobile;
+                            var from= doc.data().Pick_up;
+                            var to = doc.data().Drop;
+                            var dos = doc.data().Data_Of_Shifting;   
+                            var status=doc.data().Status;                                                              
+                                                              
+                                        list.innerHTML+= "<div  class='box'><div class='content' id='content'><h3> Email:-"+email+
+                                        "</h3><h3>Owner:-"+owner+
+                                        "</h3><h3>Email:-"+email+
+                                        "</h3><h3>Mobile number:-"+phno+
+                                        "</h3><h3>Date Of Shifting:-"+dos+
+                                        "</h3><h3>Pick Up:-"+from+
+                                        "</h3><h3>Drop:-"+to+  
+                                        "<button id='open-popup-btn'class='map' value='"+owner+"' >Complete</button></div>"                                     
+                                        "</div></div>";
+                             
+                                });
+                            });
+                           
+                            setTimeout(function(){
+          var li = document.getElementsByClassName("box");
+                console.log(" retrieving length: ",li.length);
+                for (i = 0; i < li.length; i++) {
+                  
+                    li[i].getElementsByTagName("button")[0].addEventListener("click", function() {
+                      if(this.innerText!="Accepted"){
+                              var id=this.getAttribute("value");
+                            db.collection("Orders").doc(id).update({
+                              Status:"Completed"
+                            }).then(function(){
+                              window.location.reload();
+                            });
+                      }                     
+                  });
+                
+              }
+             
+        }, 2000);
+                
+    </script>
+
+    <footer id="footer">
+        <div class="row">
+       <div class="column">
+        <h2 style="color: white;">Elite Rentals</h2>
+        <br>
+         <a href="#">Dilshukhnagar</a><br>
+         <a href="#">Hyderabad,</a><br>
+         <a href="#">India.</a><br>
+         <a href="#">Phone:+91 9999999999</a><br>
+         <a href="#">Email:Rentals@gmail.com</a><br>
+      </div>
+       <div class="column">
+           <h2 style="color: white;">Useful Links</h2>
+           <br>
+           <i style="color: white;" class="bx bx-chevron-right"></i><a href="#">Home</a><br>
+           <i class="bx bx-chevron-right"></i><a href="#"> Rentals</a><br>
+           <i class="bx bx-chevron-right"></i> <a href="#"> About</a><br>
+       </div>
+      
+    </footer>
+</body>
+</html>

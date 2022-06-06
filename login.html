@@ -1,0 +1,229 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-firestore.js"></script>
+    <link rel="stylesheet" href="css\login.css">
+    <link rel="stylesheet" href="css\carousel.css">
+    
+</head>
+<body>
+
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-auth.js"></script>
+    <script>
+            var firebaseConfig = {
+                apiKey: "AIzaSyCyVppKuVBIHgpTCEJsC6fql2j24Q9ykVc",
+                authDomain: "rental-management-e12bf.firebaseapp.com",
+                projectId: "rental-management-e12bf",
+                storageBucket: "rental-management-e12bf.appspot.com",
+                messagingSenderId: "772716264622",
+                appId: "1:772716264622:web:192dc75f005fcf956c013f",
+                measurementId: "G-11WGRKX5VQ"
+            };
+ 
+          
+            
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+            var db=firebase.firestore();
+            console.log(db);
+           
+            
+            db.collection("users")
+              .get()
+              .then(function(querySnapshot) {
+                  querySnapshot.forEach(function(doc) {
+                      // doc.data() is never undefined for query doc snapshots
+                      console.log(doc.id, " => ", doc.data());
+                  });
+              })
+              .catch(function(error) {
+                  console.log("Error getting documents: ", error);
+              });
+
+              firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                // User is signed in
+                var docRef = db.collection("users").doc(user.email);
+            
+            docRef.get().then(function(doc){
+                s=doc.data().name.indexOf(" ");
+                sessionStorage.setItem("username", doc.data().name.charAt(0)+doc.data().name.charAt(s+1));
+                
+                console.log("Logged User "+doc.data().name);
+                alert("Logged in User "+doc.data().name);
+                if(doc.data().name.includes("Vendor")){
+                    window.location.href="vendorhome.html";
+                }else{
+                window.location.href="home.html";
+                }
+
+            });
+            
+            console.log("name ="+sessionStorage.getItem("username"));
+  
+
+               
+                
+               
+                } else {
+                // No user is signed in.
+                console.log("No Logged in User ");
+                
+            
+
+                }
+                });
+                
+               
+           
+     </script>
+      
+    
+    <div class="content">
+        <img src="images/c.png" alt="" id="icon"   >
+        <form  action="home.html">
+            <h1>
+                Login to continue
+            </h1>
+            
+            
+            <div >
+                <input class="inputtext" type="text" name="email" id="lemail" placeholder="Email">
+               
+                
+            </div>
+            
+            
+            <div  >
+                <input class="inputtext" type="password" name="pass" id="lpass" placeholder="Password">
+          
+    
+            </div>
+
+      
+                <div style="margin-top: 14px; margin-left: 30px;" >
+                   
+               
+                    <input  id="showp" onclick="show()" type="checkbox" name="remember-me">
+                    <label ">
+                        Show password&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    </label>
+                
+                    <a href="forgotpassword.html" class="fp">
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspForgot Password?
+                    </a>
+                </div>
+           
+    
+                <input class ="btn" type="button" value="Login" id="login">
+
+                <input class ="btn  style="margin-top: 7px;" type="button" value="Register" id="reg">
+               
+            </div>
+            
+            
+            
+
+        </form>
+      </div>
+      
+        <img class="sidenav" src="images\hwp.jpg" alt="">
+    
+      
+      <script>
+          document.getElementById("reg").addEventListener("click",
+          function(){
+            window.location.href="signup.html";
+          });
+
+
+
+
+        function show(){
+         var pswrd = document.getElementById('lpass');
+         var icon = document.querySelector('showp');
+         if (pswrd.type === "password") {
+          pswrd.type = "text";      
+          
+         }else{
+          pswrd.type = "password";
+        
+         }
+        }
+
+        document.getElementById("login").addEventListener("click",
+        function(){
+          
+            var email=document.getElementById("lemail").value;
+            var pass=document.getElementById("lpass").value;
+
+            if(email == ""){
+              document.getElementById("lemail").value="";
+             document.getElementById("lemail").placeholder="** Please fill the email id field";
+             document.querySelector('input[type=text]').style.setProperty("--c", "red");
+               return false;
+           }
+           if((email.charAt(email.length-4)!='.') && (email.charAt(email.length-3)!='.')){
+            
+            document.getElementById("lemail").value="";
+              document.getElementById("lemail").placeholder=" ** . Invalid email id";
+              document.querySelector('input[type=text]').style.setProperty("--c", "red");
+               return false;
+           }
+   
+           if(email.indexOf('@') <= 0 ){
+            document.getElementById("lemail").value="";
+             document.getElementById("lemail").placeholder=" ** Missing @ in email field";
+             document.querySelector('input[type=text]').style.setProperty("--c", "red");
+               
+               return false;
+           }
+   
+         
+           if(pass == ""){
+               
+               document.getElementById("lpass").value="";
+               document.getElementById("lpass").placeholder="** Please fill the password field";
+               document.querySelector('input[type=password]').style.setProperty("--c", "red");
+               document.querySelector('input[type=text]').style.setProperty("--c", "red");
+               
+               return false;
+           }
+           if((pass.length < 6) || (pass.length > 20)) {
+            document.getElementById("lpass").value="";
+            document.getElementById("lpass").placeholder="** Passwords length must be between  6 and 20";
+            document.querySelector('input[type=password]').style.setProperty("--c", "red");
+            document.querySelector('input[type=text]').style.setProperty("--c", "red");
+               return false;	
+           }
+           
+           firebase.auth().signInWithEmailAndPassword(email, pass).then(function(){
+        window.alert('Logged in Successfully');
+        check=true;
+        })
+        .catch(function(err) {
+
+        window.alert("User does not exist with given credentials");
+        check=false;
+        });
+                
+            
+        
+        
+        });
+
+    
+    
+    
+       </script>
+   
+    
+</body>
+</html>

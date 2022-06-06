@@ -1,0 +1,311 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packers And Movers</title>
+    <link href="css/nav.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/movepack.css">
+    <link rel= "stylesheet" href="css/footer.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-firestore.js"></script>
+  
+
+  
+</head>
+<body>
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-auth.js"></script>
+  <script>
+
+var firebaseConfig = {
+  apiKey: "AIzaSyCyVppKuVBIHgpTCEJsC6fql2j24Q9ykVc",
+  authDomain: "rental-management-e12bf.firebaseapp.com",
+  projectId: "rental-management-e12bf",
+  storageBucket: "rental-management-e12bf.appspot.com",
+  messagingSenderId: "772716264622",
+  appId: "1:772716264622:web:192dc75f005fcf956c013f",
+  measurementId: "G-11WGRKX5VQ"
+};
+          
+          firebase.initializeApp(firebaseConfig);
+          firebase.analytics();
+          var db=firebase.firestore();
+          console.log(db);
+                  
+         
+            firebase.auth().onAuthStateChanged(function(user) {
+              if (user) {
+              // User is signed in
+             
+              } else {
+              // No user is signed in.
+              console.log("No Logged in User ");
+              
+              window.location.href="login.html";
+
+              }
+              });
+              
+            function logout(){
+            firebase.auth().signOut().then(function(){
+              sessionStorage.clear();
+            alert("Logged out scuccessfully.... Redirecting   ------>");
+            });
+            }
+        
+         
+   </script>
+    <header>
+        <div class="menu-bar">            
+            <ul>
+              <li style="margin-left:-14em; padding-right: 70px;"> <a href="home.html"><b><span>ELITE</span>RENTALS</B></a></li>
+              <li><b><a  href="home.html">HOME</a></b></li>
+              <li "><b><a   href="#">RENTALS&nbsp&nbsp<big><i style="font-size: 10px;" class="fas fa-chevron-down"></i></big> </a></b>  
+                        
+              <div class="drop-down ">
+                  <ul>
+                    
+                    <li ><b><a  href="residential.html">RESIDENTIAL</a></b></li>
+                    <li><b><a href="commercial.html">COMMERCIAL</a></b></li>
+                  
+                  </div>
+              </li>
+  
+          
+               <li><b><a href="postproperty.html">POST A PROPERTY</a></b></li>
+      
+                <li><b><a style="color:rgb(55, 218, 55);" href="Movepack.html">MOVING AND PACKING</a></b></li>
+            
+                <li><b><a href="#footer">CONTACT US</a></b>
+                 
+                  </li>
+                  
+                  <li><b><a href="javascript:logout();">LOGOUT</a></b></li>
+                  <div class="user" id="uname">
+                    User name
+                  </div>
+                  <div class="uimg"><i class="fas fa-user"></i>
+                  </div>  
+      
+              </ul>
+         
+            </div>        
+
+            
+      
+    </header>
+    <script>
+      console.log("Logged in User "+sessionStorage.getItem("username"));
+      document.getElementById("uname").firstChild.nodeValue=sessionStorage.getItem("username");  
+   </script>
+    <div class="animationBox">
+      <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<lottie-player src="https://assets10.lottiefiles.com/packages/lf20_qn0GjJ.json"  background="transparent"  speed="1"  style="width: 600px; height: 600px;"  loop  autoplay></lottie-player>
+<div class="response" id="response" style="display: none;" >
+  <h1>Your information is sent to vendors...</h1>
+  <h1>They will reach out to you ASAP....</h1>
+</div>
+
+</div>
+    <div class="post">
+       <h1 style="margin-left: 35px; font-family: poppins;"> Fill The Details</h1> 
+       <div class="inputWithIconuser">
+       
+        <input type="text" style="padding-left: 50px; width: 380px;" placeholder="Name" id="pname" class="inputs"/>
+        <i class="fas fa-user" aria-hidden="true"></i>
+
+      </div>
+      <div class="inputWithIcon">
+
+      <br><input type="number" style="padding-left: 50px;width: 380px; -moz-appearance: textfield;"   placeholder="Contact" id="pphn" class="inputs"/>
+      <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+
+      </div>
+      <div class="inputWithIcon">
+      <br><i class="fas fa-envelope" aria-hidden="true"></i><input type="email" style="padding-left: 50px;width: 380px;" id="pemail" placeholder="E-mail" class="inputs"/>
+    </div>
+
+    <div class="inputWithIcon">
+      <br><input type="date" style="padding-left: 50px;width: 380px;" id="pmovedate"  class="inputs">
+    </div>
+
+    <div class="inputWithIcon">
+      <br> <select name="" style="padding-left: 50px;width: 380px;" id="pwfrom">
+            <option value="none"selected disabled>WhereFrom</option>
+            <option value="Ameerpet">Ameerpet</option>
+            <option value="Amberper">Amberpet</option>
+            <option value="Balanagar">Balanagar</option>
+            <option value="Chikadpalli">Chikadpalli</option>   
+        </select>
+        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+
+      </div>
+    <div class="inputWithIcon">
+        <br> <select name="" style="padding-left: 50px;width: 380px;" id="pwto">
+            <option value="none"selected disabled>WhereTo</option>
+            <option value="Ameerpet">Ameerpet</option>
+            <option value="Amberpet">Amberpet</option>
+            <option value="Balanagar">Balanagar</option>
+            <option value="Chikadpalli">Chikadpalli</option>    
+        </select>
+        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+    </div>  
+
+    <br><input type ="button" style="margin-left: 110px;"  id="pbtn" onclick="javascript:validation();" class="searchbutton" value="PLACE ORDER"></a>
+   </div>
+    
+   <script>
+     function validation(){
+    
+       
+        var name = document.getElementById('pname').value;    
+        var from = document.getElementById('pwfrom').value;
+        var to = document.getElementById('pwto').value;
+        var movdate = document.getElementById('pmovedate').value;
+        var mobileNumber = document.getElementById('pphn').value;
+        var emails = document.getElementById('pemail').value;
+
+        
+
+
+
+        if(name == ""){
+          document.getElementById("pname").value="";
+            document.getElementById("pname").placeholder="* Please fill the Name field";
+            document.querySelector('input[type=text]').style.setProperty("--c", "red");
+            return false;
+        }
+        if((name.length <= 2) || (name.length > 20)) {
+          document.getElementById("pname").value="";
+           document.getElementById("pname").placeholder="*Name lenght must be between 2 and 20";
+           document.querySelector('input[type=text]').style.setProperty("--c", "red");
+            return false;	
+        }
+        if(!isNaN(name)){
+          document.getElementById("pname").value="";
+            document.getElementById("pname").placeholder="*only characters are allowed";      
+            document.querySelector('input[type=text]').style.setProperty("--c", "red");     
+            return false;
+        }
+
+
+        
+        if(mobileNumber == ""){
+          document.getElementById("pphn").value="";
+            document.getElementById("pphn").placeholder="*Please fill the mobile Number";
+            document.querySelector('input[type=number]').style.setProperty("--c", "red");
+             return false;
+         }
+         if(isNaN(mobileNumber)){
+          document.getElementById("pphn").value="";
+          document.getElementById("pphn").placeholder="*user must write digits only not characters";
+          document.querySelector('input[type=number]').style.setProperty("--c", "red");
+             return false;
+         }
+         if(mobileNumber.length!=10){
+          document.getElementById("pphn").value="";
+            document.getElementById("pphn").placeholder="*Mobile Number must be 10 digits";
+            document.querySelector('input[type=number]').style.setProperty("--c", "red");
+             return false;
+         }
+        
+
+         if(emails == ""){
+          document.getElementById("pemail").value="";
+            document.getElementById("pemail").placeholder=" *Please fill the email id field";
+            document.querySelector('input[type=email]').style.setProperty("--c", "red");
+              return false;
+          }
+          if(emails.indexOf('@') <= 0 ){
+            document.getElementById("pemail").value="";
+              document.getElementById("pemail").placeholder="*@ Invalid Position in email field";
+              document.querySelector('input[type=email]').style.setProperty("--c", "red");
+              return false;
+          }
+  
+          if((emails.charAt(emails.length-4)!='.') && (emails.charAt(emails.length-3)!='.')){
+            document.getElementById("pemail").value="";
+             document.getElementById("pemail").placeholder="*. Invalid email id";
+             document.querySelector('input[type=email]').style.setProperty("--c", "red");
+              return false;
+          }
+  
+  
+
+
+          if(movdate==""){
+           alert("**Please select the date of moving");
+         return false;
+       }
+
+
+
+        if(from == "none"){
+            
+            alert("**Please select the pickup location");
+            
+            return false;
+        }
+        if(to== "none"){
+            
+            alert("**Please select the drop location");
+            
+            return false;
+        }
+        
+        data={
+          Customer_Name : name,
+          Customer_Mobile: mobileNumber,
+          Customer_Email: emails,
+          Date_Of_Shifting: movdate,
+          Pick_up: from,
+          Drop: to,
+          Status:"Request"
+        }
+
+        db.collection("Orders").doc(name).set(data).then(function(){
+          document.getElementById("response").style.display="block";
+                    }).catch(function(err){
+                        alert("Failed to add user details!!")
+                    });
+       
+       
+
+
+
+     }
+
+     
+
+   </script>
+
+
+    
+    <footer id="footer" style="margin-top:0%">
+        <div class="row">
+       <div class="column">
+        <h2 style="color: white;">Elite Rentals</h2>
+        <br>
+         <a href="#">Dilshukhnagr</a><br>
+         <a href="#">Hyderabad,</a><br>
+         <a href="#">India.</a><br>
+         <a href="#">Phone:+91 9999999999</a><br>
+         <a href="#">Email:Rentals@gmail.com</a><br>
+      </div>
+       <div class="column">
+           <h2 style="color: white;">Useful Links</h2>
+           <br>
+           <i style="color: white;" class="bx bx-chevron-right"></i><a href="#">Home</a><br>
+           <i class="bx bx-chevron-right"></i><a href="#"> Rentals</a><br>
+           <i class="bx bx-chevron-right"></i> <a href="#"> About</a><br>
+       </div>
+      
+    </footer>
+   
+   
+</body>
+</html>

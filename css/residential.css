@@ -1,0 +1,65 @@
+.search{
+       
+    width: 100%;
+    height: 500px;
+    border-top: 2px solid lightgreen;
+    margin-top:67px ;
+    font-family:Poppins ;
+    
+}
+select{
+    height: 50px;
+ font-size: 17px;
+    width: 15%;
+    margin-top: 1%;
+    margin-left: 250px;
+    text-align: center;
+  padding: 10px;
+  font-family:poppins ;
+  border-radius: 5px;
+  border: 1px solid  lightgreen;
+}
+#cityselect{
+ font-family:poppins ;
+  margin-left: 10px;
+}
+#locality{
+    height: 50px;
+    width: 15%;
+    margin-left: 10px;
+    padding:20px;
+    border-radius: 5px;
+    border: 1px solid  lightgreen;
+    margin-top: -5em;
+    font-size: 17px;
+    font-family:poppins ;
+}
+body{
+ background-color:rgb(245, 244, 244);
+ font-family:poppins;
+}
+
+.searchbutton {
+ 
+  width: 150px;
+  height: 40px;
+  border: 1px;
+  font-size: 20px;
+  border-radius: 5px;
+  background-color: rgb(12, 196, 12);
+  color: white;
+  font-family: poppins;
+  text-align: center;
+  margin-top: -2.3em;
+  margin-left: 55%;
+ }
+#error{
+  color: red;
+  font-size: 15px;
+  font-family: poppins;
+margin-left: 600px;
+margin-top: 85px;
+padding-top: 30px;
+
+
+}
